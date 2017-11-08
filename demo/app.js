@@ -165,7 +165,7 @@ class App extends Component {
           </form>
         </div>
 
-        <div style={{ flex: '1 0 50%', margin: '15px 0 0', backgroundColor: '#4d4d4d', borderTop: '1px solid #454545' }}>
+        <div style={{ flex: '1 0 50%', margin: '15px 0 0' }}>
           <SortableTree
             theme={FileExplorerTheme}
             treeData={treeData}

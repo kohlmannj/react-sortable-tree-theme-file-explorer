@@ -19,4 +19,8 @@ module.exports = {
   scaffoldBlockPxWidth: 22,
   rowHeight: 38,
   slideRegionSize: 50,
+  style: {
+    backgroundColor: '#4d4d4d',
+    borderTop: '1px solid #454545',
+  }
 };
