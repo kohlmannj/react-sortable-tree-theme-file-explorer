@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+import { Icon } from 'semantic-ui-react';
 import styles from './node-content-renderer.scss';
 
 function isDescendant(older, younger) {
@@ -96,13 +98,12 @@ class FileThemeNodeContentRenderer extends Component {
           node.children &&
           node.children.length > 0 && (
             <button
-              type="button"
               aria-label={node.expanded ? 'Collapse' : 'Expand'}
               className={
                 node.expanded ? styles.collapseButton : styles.expandButton
               }
               style={{
-                left: (lowerSiblingCounts.length - 0.7) * scaffoldBlockPxWidth,
+                left: (lowerSiblingCounts.length - 1) * scaffoldBlockPxWidth,
               }}
               onClick={() =>
                 toggleChildrenVisibility({
@@ -110,7 +111,9 @@ class FileThemeNodeContentRenderer extends Component {
                   path,
                   treeIndex,
                 })}
-            />
+            >
+              <Icon className={styles.collapseIcon} name={node.expanded ? 'angle down' : 'angle right'} />
+            </button>
           )}
 
         <div
@@ -121,19 +124,17 @@ class FileThemeNodeContentRenderer extends Component {
         >
           {/* Set the row preview to be used during drag and drop */}
           {connectDragPreview(
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', height: '100%' }}>
               {scaffold}
               <div
-                className={
-                  styles.row +
-                  (isLandingPadActive ? ` ${styles.rowLandingPad}` : '') +
-                  (isLandingPadActive && !canDrop
-                    ? ` ${styles.rowCancelPad}`
-                    : '') +
-                  (isSearchMatch ? ` ${styles.rowSearchMatch}` : '') +
-                  (isSearchFocus ? ` ${styles.rowSearchFocus}` : '') +
-                  (className ? ` ${className}` : '')
-                }
+                className={cx(styles.row, {
+                  [styles.rowLandingPad]: isLandingPadActive,
+                  [styles.rowCancelPad]: isLandingPadActive && !canDrop,
+                  [styles.rowSearchMatch]: isSearchMatch,
+                  [styles.rowSearchFocus]: isSearchFocus,
+                  [styles.rowDragging]: isDragging,
+                  [className]: className,
+                })}
                 style={{
                   opacity: isDraggedDescendant ? 0.5 : 1,
                   ...style,

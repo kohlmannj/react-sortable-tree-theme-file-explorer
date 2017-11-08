@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import SortableTree, { toggleExpandedForAll } from 'react-sortable-tree';
+import { Icon } from 'semantic-ui-react';
 import FileExplorerTheme from '../index';
 import './app.css';
 
@@ -164,7 +165,7 @@ class App extends Component {
           </form>
         </div>
 
-        <div style={{ flex: '1 0 50%', padding: '0 0 0 15px' }}>
+        <div style={{ flex: '1 0 50%', margin: '15px 0 0', backgroundColor: '#4d4d4d', borderTop: '1px solid #454545' }}>
           <SortableTree
             theme={FileExplorerTheme}
             treeData={treeData}
@@ -181,35 +182,8 @@ class App extends Component {
             canDrop={({ nextParent }) => !nextParent || nextParent.isDirectory}
             generateNodeProps={rowInfo => ({
               icons: rowInfo.node.isDirectory
-                ? [
-                    <div
-                      style={{
-                        borderLeft: 'solid 8px gray',
-                        borderBottom: 'solid 10px gray',
-                        marginRight: 10,
-                        width: 16,
-                        height: 12,
-                        filter: rowInfo.node.expanded
-                          ? 'drop-shadow(1px 0 0 gray) drop-shadow(0 1px 0 gray) drop-shadow(0 -1px 0 gray) drop-shadow(-1px 0 0 gray)'
-                          : 'none',
-                        borderColor: rowInfo.node.expanded ? 'white' : 'gray',
-                      }}
-                    />,
-                  ]
-                : [
-                    <div
-                      style={{
-                        border: 'solid 1px black',
-                        fontSize: 8,
-                        textAlign: 'center',
-                        marginRight: 10,
-                        width: 12,
-                        height: 16,
-                      }}
-                    >
-                      F
-                    </div>,
-                  ],
+                ? [<Icon fitted name={rowInfo.node.expanded ? 'folder open' : 'folder'} />]
+                : [<Icon fitted name="file" />],
               buttons: [
                 <button
                   style={{
